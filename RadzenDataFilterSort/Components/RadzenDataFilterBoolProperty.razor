@@ -1,0 +1,67 @@
+@using Radzen
+@typeparam TItem
+
+<RadzenDataFilterProperty
+    TItem="TItem"
+    Property="@Property"
+    Title="@Title"
+    FilterOperator="FilterOperator.Equals"
+    Type="@typeof(bool)">
+    <FilterTemplate>
+        <RadzenDropDown Style="width:100%;"
+                        AllowFiltering="false"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        Change="@(args => OnChange(args))"
+                        @bind-Value="@context.FilterValue"
+                        Data="@(new[] { true, false })"
+                        AllowClear="true"
+                        Multiple="false">
+            <Template Context="filterValue">
+                @{
+                    var filterValueCasted = (bool)filterValue;
+                }
+                @if (filterValueCasted)
+                {
+                    <span>Yes</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </Template>
+            <ValueTemplate Context="filterValue">
+                @{
+                    var filterValueCasted = (bool)filterValue;
+                }
+                @if (filterValueCasted)
+                {
+                    <span>Yes</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </ValueTemplate>
+        </RadzenDropDown>
+    </FilterTemplate>
+</RadzenDataFilterProperty>
+
+@code {
+
+    [Parameter]
+    public string Property { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+    
+    private void OnChange(object value)
+    {
+        if (value is bool boolValue)
+        {
+            ValueChanged.InvokeAsync(boolValue);
+        }
+    }
+}

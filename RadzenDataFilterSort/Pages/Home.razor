@@ -1,0 +1,66 @@
+﻿@page "/"
+@using RadzenDataFilterSort.Model
+
+<PageTitle>Home</PageTitle>
+
+<RadzenCard>
+    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Direct declaration</RadzenText>
+    <RadzenDataFilter Auto="true"
+                      TItem="VmUser"
+                      Data="users"
+                      AllowColumnFiltering="@true">
+        <Properties>
+            <RadzenDataFilterProperty Property="@nameof(VmUser.LastName)" Title="Last Name"></RadzenDataFilterProperty>
+            <RadzenDataFilterProperty Property="@nameof(VmUser.FirstName)"
+                                      Title="First Name"></RadzenDataFilterProperty>
+            <RadzenDataFilterProperty Property="@nameof(VmUser.Email)" Title="Email"></RadzenDataFilterProperty>
+            <RadzenDataFilterBoolProperty Property="@nameof(VmUser.IsActive)"
+                                          Title="Is Active"></RadzenDataFilterBoolProperty>
+            <RadzenDataFilterBoolProperty Property="@nameof(VmUser.IsAdmin)"
+                                          Title="Is Admin"></RadzenDataFilterBoolProperty>
+            <RadzenDataFilterProperty Property="@nameof(VmUser.UserName)" Title="User Name"></RadzenDataFilterProperty>
+        </Properties>
+
+    </RadzenDataFilter>
+</RadzenCard>
+
+<RadzenCard>
+    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Render Fragment</RadzenText>
+    <RadzenDataFilter Auto="true"
+                      TItem="VmUser"
+                      Data="users"
+                      AllowColumnFiltering="@true">
+        <Properties>
+            @RenderFilters()
+        </Properties>
+
+    </RadzenDataFilter>
+</RadzenCard>
+
+@code{
+
+    private List<VmUser> users = new List<VmUser>();
+
+    private RenderFragment RenderFilters()
+    {
+        return __builder =>
+        {
+            <text>
+                <RadzenDataFilterProperty Property="@nameof(VmUser.LastName)" TItem="VmUser"
+                                          Title="Last Name"></RadzenDataFilterProperty>
+                <RadzenDataFilterProperty Property="@nameof(VmUser.FirstName)" TItem="VmUser"
+                                          Title="First Name"></RadzenDataFilterProperty>
+                <RadzenDataFilterProperty Property="@nameof(VmUser.Email)" TItem="VmUser"
+                                          Title="Email"></RadzenDataFilterProperty>
+                <RadzenDataFilterBoolProperty Property="@nameof(VmUser.IsActive)" TItem="VmUser"
+                                              Title="Is Active"></RadzenDataFilterBoolProperty>
+                <RadzenDataFilterBoolProperty Property="@nameof(VmUser.IsAdmin)" TItem="VmUser"
+                                              Title="Is Admin"></RadzenDataFilterBoolProperty>
+                <RadzenDataFilterProperty Property="@nameof(VmUser.UserName)" TItem="VmUser"
+                                          Title="User Name"></RadzenDataFilterProperty>
+
+            </text>
+        };
+    }
+
+}
